@@ -1,0 +1,366 @@
+:root {
+    --bg-color: #f8faf9;
+    --card-default: #ffffff;
+    --card-overdue: #fff2f2;
+    --card-warning: #fff9ed;
+    --card-doing: #f4f9ff;
+    --accent-color: #7a944a;
+    --text-main: #444444;
+    --text-sub: #8e8e8e;
+    --border-color: #e0e0e0;
+    --column-bg: #eff1f0;
+    --tag-bg: #eee;
+    --radius-m: 14px;
+    --radius-l: 24px;
+}
+
+body.theme-dark {
+    --bg-color: #2c2e33;
+    --card-default: #373a40;
+    --card-overdue: #5c2d2d;
+    --card-warning: #5c4d2d;
+    --card-doing: #2d3e5c;
+    --accent-color: #63e6be;
+    --text-main: #f8f9fa;
+    --text-sub: #adb5bd;
+    --border-color: #495057;
+    --column-bg: #1a1b1e;
+    --tag-bg: #2c2e33;
+}
+
+body.theme-neon {
+    --bg-color: #1a2133;
+    --card-default: #252d45;
+    --card-overdue: #4a2429;
+    --card-warning: #4a3f24;
+    --card-doing: #24304a;
+    --accent-color: #00dfff;
+    --text-main: #ffffff;
+    --text-sub: #90e0ef;
+    --border-color: #33415c;
+    --column-bg: rgba(10, 15, 28, 0.7);
+    --tag-bg: #1a2133;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: "Hiragino Maru Gothic ProN", "Yu Gothic UI", sans-serif;
+    margin: 0;
+    padding: 20px;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.app-container {
+    max-width: 1600px;
+    height: calc(100vh - 40px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+#themeSelect {
+    padding: 8px 16px;
+    border-radius: var(--radius-l);
+    border: 1px solid var(--border-color);
+    background: var(--card-default);
+    color: var(--text-main);
+    font-family: inherit;
+    outline: none;
+}
+
+/* --- 入力フォーム --- */
+.add-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    background: var(--card-default);
+    padding: 15px 25px;
+    border-radius: var(--radius-m);
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 0.7rem;
+    font-weight: bold;
+    opacity: 0.7;
+    padding-left: 4px;
+}
+
+.add-form input,
+.add-form select {
+    background: var(--bg-color);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 8px 14px;
+    border-radius: 10px;
+    height: 40px;
+    box-sizing: border-box;
+    outline: none;
+    font-family: inherit;
+}
+
+#taskTitle {
+    flex-grow: 1;
+}
+
+.add-form button {
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    height: 40px;
+    padding: 0 25px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* --- カンバンボード --- */
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    flex-grow: 1;
+    height: calc(100% - 160px);
+    overflow: hidden;
+}
+
+.kanban-column {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.kanban-column h3 {
+    font-size: 0.95rem;
+    margin: 0 0 10px 8px;
+    font-weight: 800;
+}
+
+.task-list-area {
+    background: var(--column-bg);
+    border-radius: var(--radius-m);
+    padding: 18px;
+    flex-grow: 1;
+    overflow-y: auto;
+    /* ここでスクロールを有効化 */
+    border-top: 6px solid #ccc;
+}
+
+/* スクロールバーの見た目調整（Chrome/Edge/Safari） */
+.task-list-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.task-list-area::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.task-list-area::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.theme-dark .task-list-area::-webkit-scrollbar-thumb,
+.theme-neon .task-list-area::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.column-todo .task-list-area {
+    border-top-color: #adb5bd;
+}
+
+.column-doing .task-list-area {
+    border-top-color: var(--accent-color);
+}
+
+.column-done .task-list-area {
+    border-top-color: #63e6be;
+}
+
+.column-urgent .task-list-area {
+    border-top-color: #d9534f;
+    background: rgba(217, 83, 79, 0.03);
+}
+
+/* --- タスクカード --- */
+.task-card {
+    background: var(--card-default);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 18px;
+    border: 1px solid var(--border-color);
+    border-left: 6px solid transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.task-card.task-done {
+    background-color: #ced4da !important;
+    opacity: 0.6;
+    border-left-color: #adb5bd !important;
+}
+
+.task-card.overdue {
+    background-color: var(--card-overdue) !important;
+    border-left-color: #ff8787 !important;
+}
+
+.task-card.warning {
+    background-color: var(--card-warning) !important;
+    border-left-color: #ffd43b !important;
+}
+
+.task-card.doing {
+    background-color: var(--card-doing) !important;
+    border-left-color: var(--accent-color) !important;
+}
+
+.task-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin: 10px 0;
+    line-height: 1.4;
+    word-break: break-all;
+}
+
+.category-tag {
+    background: var(--tag-bg);
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.task-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-top: 12px;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0.4;
+    padding: 0;
+    font-family: inherit;
+}
+
+/* --- モーダル --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(6px);
+}
+
+.modal-content {
+    background: var(--card-default);
+    padding: 35px;
+    border-radius: var(--radius-l);
+    width: 500px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+}
+
+.modal-content h3 {
+    margin: 0 0 25px 0;
+    border-bottom: 3px solid var(--accent-color);
+    display: inline-block;
+    padding-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+.modal-item {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.modal-item label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    opacity: 0.7;
+    padding-left: 4px;
+}
+
+.modal-item input,
+.modal-item select,
+.modal-item textarea {
+    background: var(--bg-color);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-family: inherit;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0.95rem;
+}
+
+.modal-row {
+    display: flex;
+    gap: 15px;
+}
+
+.modal-row .modal-item {
+    flex: 1;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-secondary {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-sub);
+    padding: 10px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
