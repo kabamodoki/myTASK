@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>個人用タスク管理</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/kanban.css">
+    <link rel="stylesheet" href="css/gantt.css">
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 </head>
 
@@ -57,8 +59,7 @@
 
                 <div class="theme-box">
                     <label>テーマ変更</label>
-                    <select id="themeSelect"
-                        onchange="document.body.className=this.value; localStorage.setItem('selectedTheme', this.value);">
+                    <select id="themeSelect" onchange="changeTheme(this.value)">
                         <option value="">カジュアル</option>
                         <option value="theme-dark">ダーク</option>
                         <option value="theme-neon">ネオンブルー</option>
@@ -88,10 +89,7 @@
 
         <main id="ganttView" class="view-section">
             <div class="gantt-view-container">
-                <div class="gantt-scroll">
-                    <div id="ganttHeader" class="gantt-header-row"></div>
-                    <div id="ganttChart"></div>
-                </div>
+                <div class="gantt-scroll" id="ganttScrollContainer"></div>
             </div>
         </main>
     </div>
@@ -133,14 +131,17 @@
                 <textarea id="editMemo" rows="4"></textarea>
             </div>
             <div class="modal-footer">
-                <button onclick="document.getElementById('editModal').style.display='none'"
-                    style="background:#fff; border:1px solid #ccc;">閉じる</button>
+                <button onclick="closeEditModal()" style="background:#fff; border:1px solid #ccc;">閉じる</button>
                 <button onclick="saveEdit()" style="background:var(--accent-color); color:white;">変更を保存</button>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="js/utils/date-helper.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/components/kanban.js"></script>
+    <script src="js/components/gantt.js"></script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>

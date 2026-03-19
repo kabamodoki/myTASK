@@ -1,0 +1,280 @@
+.gantt-view-container {
+    background: var(--card-default);
+    border-radius: var(--radius-m);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.gantt-scroll {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+    background-color: var(--card-default);
+}
+
+.gantt-chart-inner {
+    width: max-content;
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* -------------------------------------------
+   ヘッダー部分
+-------------------------------------------- */
+.gantt-header-row {
+    display: flex;
+    align-items: stretch;
+    background: var(--column-bg);
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    height: 40px;
+    /* 親要素の枠線を廃止 */
+}
+
+.gantt-label-header {
+    position: sticky;
+    left: 0;
+    z-index: 61;
+    width: 340px;
+    min-width: 340px;
+    flex-shrink: 0;
+    height: 100%;
+    background-color: var(--column-bg) !important;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    font-size: 0.75rem;
+    color: var(--text-sub);
+    font-weight: bold;
+    gap: 10px;
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    /* ★子要素自身に枠線を持たせる */
+    box-sizing: border-box;
+}
+
+/* タイムライン側のヘッダー枠線 */
+.gantt-label-header+div {
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* -------------------------------------------
+   チャートエリア＆グループ
+-------------------------------------------- */
+.gantt-chart-area {
+    position: relative;
+}
+
+.gantt-group-wrapper {
+    display: flex;
+    flex-direction: column;
+    /* 親要素の枠線を廃止（赤い線が透ける原因だったため） */
+}
+
+.gantt-group-header-row {
+    display: flex;
+    align-items: stretch;
+    background: var(--column-bg);
+    position: sticky;
+    top: 40px;
+    z-index: 55;
+    height: 35px;
+    box-sizing: border-box;
+}
+
+.gantt-group-name {
+    position: sticky;
+    left: 0;
+    z-index: 56;
+    width: 340px;
+    min-width: 340px;
+    flex-shrink: 0;
+    height: 100%;
+    padding: 0 15px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--column-bg) !important;
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    /* ★子要素自身に枠線を持たせる */
+    box-sizing: border-box;
+}
+
+/* タイムライン側のグループヘッダー枠線 */
+.gantt-group-name+div {
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* -------------------------------------------
+   タスク行
+-------------------------------------------- */
+.gantt-row {
+    display: flex;
+    align-items: stretch;
+    height: 45px;
+    box-sizing: border-box;
+    /* 親要素の枠線を廃止 */
+}
+
+.gantt-label {
+    position: sticky;
+    left: 0;
+    z-index: 50;
+    width: 340px;
+    min-width: 340px;
+    flex-shrink: 0;
+    height: 100%;
+    background-color: var(--card-default) !important;
+    font-size: 0.85rem;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px dotted var(--border-color);
+    /* ★子要素自身に枠線を持たせる */
+    box-sizing: border-box;
+}
+
+/* グループの最後の行に、太い区切り線を引く */
+.gantt-row:last-child .gantt-label {
+    border-bottom: 2px solid var(--border-color);
+}
+
+.g-col-title {
+    flex: 1;
+    min-width: 0;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.g-col-user {
+    width: 80px;
+    min-width: 80px;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: var(--text-sub);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+.g-col-status {
+    width: 70px;
+    min-width: 70px;
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 4px;
+    padding: 4px 0;
+    border: 1px solid var(--border-color);
+}
+
+.g-col-status[data-status="完了"] {
+    background: var(--tag-bg);
+    color: var(--text-sub);
+}
+
+.g-col-status[data-status="進行中"] {
+    background: var(--card-doing);
+    color: #4dabf7;
+    border-color: #4dabf7;
+}
+
+.g-col-status[data-status="未完了"] {
+    background: var(--bg-color);
+    color: var(--text-main);
+}
+
+/* -------------------------------------------
+   タイムライン＆バー
+-------------------------------------------- */
+.gantt-timeline {
+    position: relative;
+    height: 100%;
+    background-image: linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+    z-index: 1;
+    border-bottom: 1px dotted var(--border-color);
+    /* ★タイムライン側にも枠線を持たせる */
+    box-sizing: border-box;
+}
+
+/* グループの最後の行のタイムライン側に、太い区切り線を引く */
+.gantt-row:last-child .gantt-timeline {
+    border-bottom: 2px solid var(--border-color);
+}
+
+.gantt-day-cell {
+    text-align: center;
+    font-size: 0.7rem;
+    border-right: 1px solid var(--border-color);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.gantt-day-cell.weekend {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.gantt-bar {
+    position: absolute;
+    height: 26px;
+    border-radius: 13px;
+    top: 9px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: var(--accent-color);
+}
+
+.gantt-bar.doing {
+    background: #4dabf7;
+}
+
+.gantt-bar.warning {
+    background: #fcc419;
+    color: #333;
+}
+
+.gantt-bar.overdue {
+    background: #ff8787;
+}
+
+.gantt-bar.task-done {
+    background: #adb5bd;
+    opacity: 0.6;
+}
+
+.today-line {
+    position: absolute;
+    width: 2px;
+    background: #ff8787;
+    z-index: 12;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+}

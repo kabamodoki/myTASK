@@ -1,0 +1,148 @@
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    flex: 1;
+    min-height: 0;
+}
+
+.kanban-column {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.kanban-column h3 {
+    font-size: 0.95rem;
+    margin: 0 0 10px 8px;
+    font-weight: 800;
+}
+
+.task-list-area {
+    background: var(--column-bg);
+    border-radius: var(--radius-m);
+    padding: 18px;
+    flex: 1;
+    overflow-y: auto;
+    border-top: 6px solid #ccc;
+}
+
+.column-todo .task-list-area {
+    border-top-color: #adb5bd;
+}
+
+.column-doing .task-list-area {
+    border-top-color: var(--accent-color);
+}
+
+.column-done .task-list-area {
+    border-top-color: #63e6be;
+}
+
+.column-urgent .task-list-area {
+    border-top-color: #d9534f;
+}
+
+.task-card {
+    background: var(--card-default);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 18px;
+    border: 1px solid var(--border-color);
+    border-left: 6px solid #fbcf33;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.task-card.doing {
+    background-color: var(--card-doing) !important;
+    border-left-color: #4dabf7 !important;
+}
+
+.task-card.warning {
+    background-color: var(--card-warning) !important;
+    border-left-color: #fcc419 !important;
+}
+
+.task-card.overdue {
+    background-color: var(--card-overdue) !important;
+    border-left-color: #ff8787 !important;
+}
+
+.task-card.task-done {
+    background-color: var(--bg-color) !important;
+    opacity: 0.5;
+    border-left-color: #adb5bd !important;
+}
+
+.task-header-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.category-tag {
+    background: var(--tag-bg);
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.group-badge {
+    font-size: 0.7rem;
+    color: var(--text-sub);
+    border: 1px dashed var(--border-color);
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: transparent;
+}
+
+.user-badge {
+    font-size: 0.7rem;
+    color: var(--text-sub);
+    border: 1px solid var(--border-color);
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: var(--card-default);
+    margin-left: auto;
+    font-weight: bold;
+}
+
+.task-title {
+    font-weight: 700;
+    font-size: 1rem;
+    margin: 8px 0;
+    line-height: 1.4;
+}
+
+.task-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    opacity: 0.9;
+    margin-top: 12px;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: bold;
+}
+
+.footer-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.delete-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: 0.2s;
+}
