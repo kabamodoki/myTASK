@@ -5,6 +5,7 @@
     --card-warning: #fff9ed;
     --card-doing: #f4f9ff;
     --accent-color: #7a944a;
+    --nav-bg: #2c2e33;
     --text-main: #444444;
     --text-sub: #8e8e8e;
     --border-color: #e0e0e0;
@@ -15,31 +16,31 @@
 }
 
 body.theme-dark {
-    --bg-color: #2c2e33;
-    --card-default: #373a40;
-    --card-overdue: #5c2d2d;
-    --card-warning: #5c4d2d;
-    --card-doing: #2d3e5c;
-    --accent-color: #63e6be;
-    --text-main: #f8f9fa;
-    --text-sub: #adb5bd;
-    --border-color: #495057;
-    --column-bg: #1a1b1e;
-    --tag-bg: #2c2e33;
+    --bg-color: #2b2c30;
+    --card-default: #3a3b40;
+    --card-overdue: #5c3030;
+    --card-warning: #5c4f30;
+    --card-doing: #30415c;
+    --accent-color: #79d4a3;
+    --text-main: #f0f0f0;
+    --text-sub: #b0b0b0;
+    --border-color: #4a4b50;
+    --column-bg: #1e1f23;
+    --tag-bg: #4a4b50;
 }
 
 body.theme-neon {
-    --bg-color: #1a2133;
-    --card-default: #252d45;
-    --card-overdue: #4a2429;
-    --card-warning: #4a3f24;
-    --card-doing: #24304a;
-    --accent-color: #00dfff;
+    --bg-color: #121a30;
+    --card-default: #1e2846;
+    --card-overdue: #5c202a;
+    --card-warning: #5c4b1e;
+    --card-doing: #263a66;
+    --accent-color: #00f0ff;
     --text-main: #ffffff;
-    --text-sub: #90e0ef;
-    --border-color: #33415c;
-    --column-bg: rgba(10, 15, 28, 0.7);
-    --tag-bg: #1a2133;
+    --text-sub: #8bdaeb;
+    --border-color: #187fb8;
+    --column-bg: #0d1326;
+    --tag-bg: #184a75;
 }
 
 body {
@@ -47,18 +48,67 @@ body {
     color: var(--text-main);
     font-family: "Hiragino Maru Gothic ProN", "Yu Gothic UI", sans-serif;
     margin: 0;
-    padding: 20px;
+    padding: 0;
     height: 100vh;
-    box-sizing: border-box;
+    display: flex;
     overflow: hidden;
 }
 
-.app-container {
-    max-width: 1600px;
-    height: calc(100vh - 40px);
-    margin: 0 auto;
+.side-nav {
+    width: 75px;
+    background: var(--nav-bg);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 25px 0;
+    gap: 20px;
+    z-index: 100;
+}
+
+.nav-item {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.65rem;
+    transition: 0.3s;
+    opacity: 0.5;
+}
+
+.nav-item img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+    object-fit: contain;
+}
+
+.nav-item.active {
+    opacity: 1;
+    background: var(--accent-color);
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.view-section {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.view-section.active {
+    display: flex;
 }
 
 header {
@@ -68,26 +118,56 @@ header {
     margin-bottom: 15px;
 }
 
-#themeSelect {
-    padding: 8px 16px;
-    border-radius: var(--radius-l);
-    border: 1px solid var(--border-color);
-    background: var(--card-default);
-    color: var(--text-main);
-    font-family: inherit;
-    outline: none;
+.add-form-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 25px;
+    gap: 15px;
 }
 
-/* --- 入力フォーム --- */
 .add-form {
     display: flex;
     align-items: flex-end;
-    gap: 15px;
+    gap: 12px;
     background: var(--card-default);
-    padding: 15px 25px;
+    padding: 20px;
     border-radius: var(--radius-m);
-    margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    width: auto;
+}
+
+.theme-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 6px;
+    background: var(--card-default);
+    padding: 20px;
+    border-radius: var(--radius-m);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.theme-box label,
+.form-group label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    opacity: 0.7;
+    padding-left: 4px;
+}
+
+.theme-box select {
+    background: var(--bg-color);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 0 12px;
+    border-radius: 10px;
+    height: 46px;
+    outline: none;
+    font-family: inherit;
+    box-sizing: border-box;
+    font-size: 0.85rem;
+    cursor: pointer;
 }
 
 .form-group {
@@ -96,49 +176,53 @@ header {
     gap: 6px;
 }
 
-.form-group label {
-    font-size: 0.7rem;
-    font-weight: bold;
-    opacity: 0.7;
-    padding-left: 4px;
-}
-
 .add-form input,
 .add-form select {
     background: var(--bg-color);
     color: var(--text-main);
     border: 1px solid var(--border-color);
-    padding: 8px 14px;
+    padding: 0 12px;
     border-radius: 10px;
-    height: 40px;
-    box-sizing: border-box;
+    height: 46px;
     outline: none;
     font-family: inherit;
+    box-sizing: border-box;
+    font-size: 0.85rem;
 }
 
 #taskTitle {
-    flex-grow: 1;
+    width: 220px;
+}
+
+#taskGroup,
+#taskUser,
+#taskCategory {
+    width: 100px;
+}
+
+.add-form input[type="date"] {
+    width: 130px;
 }
 
 .add-form button {
     background: var(--accent-color);
     color: #fff;
     border: none;
-    height: 40px;
+    height: 46px;
     padding: 0 25px;
-    border-radius: 20px;
+    border-radius: 10px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 0.85rem;
+    transition: 0.2s;
 }
 
-/* --- カンバンボード --- */
 .kanban-board {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
-    flex-grow: 1;
-    height: calc(100% - 160px);
-    overflow: hidden;
+    flex: 1;
+    min-height: 0;
 }
 
 .kanban-column {
@@ -158,29 +242,9 @@ header {
     background: var(--column-bg);
     border-radius: var(--radius-m);
     padding: 18px;
-    flex-grow: 1;
+    flex: 1;
     overflow-y: auto;
-    /* ここでスクロールを有効化 */
     border-top: 6px solid #ccc;
-}
-
-/* スクロールバーの見た目調整（Chrome/Edge/Safari） */
-.task-list-area::-webkit-scrollbar {
-    width: 6px;
-}
-
-.task-list-area::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.task-list-area::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-.theme-dark .task-list-area::-webkit-scrollbar-thumb,
-.theme-neon .task-list-area::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
 }
 
 .column-todo .task-list-area {
@@ -197,24 +261,26 @@ header {
 
 .column-urgent .task-list-area {
     border-top-color: #d9534f;
-    background: rgba(217, 83, 79, 0.03);
 }
 
-/* --- タスクカード --- */
 .task-card {
     background: var(--card-default);
     border-radius: 12px;
     padding: 18px;
     margin-bottom: 18px;
     border: 1px solid var(--border-color);
-    border-left: 6px solid transparent;
+    border-left: 6px solid #fbcf33;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
 }
 
-.task-card.task-done {
-    background-color: #ced4da !important;
-    opacity: 0.6;
-    border-left-color: #adb5bd !important;
+.task-card.doing {
+    background-color: var(--card-doing) !important;
+    border-left-color: #4dabf7 !important;
+}
+
+.task-card.warning {
+    background-color: var(--card-warning) !important;
+    border-left-color: #fcc419 !important;
 }
 
 .task-card.overdue {
@@ -222,22 +288,17 @@ header {
     border-left-color: #ff8787 !important;
 }
 
-.task-card.warning {
-    background-color: var(--card-warning) !important;
-    border-left-color: #ffd43b !important;
+.task-card.task-done {
+    background-color: #e9ecef !important;
+    opacity: 0.6;
+    border-left-color: #adb5bd !important;
 }
 
-.task-card.doing {
-    background-color: var(--card-doing) !important;
-    border-left-color: var(--accent-color) !important;
-}
-
-.task-title {
-    font-weight: 700;
-    font-size: 1.05rem;
-    margin: 10px 0;
-    line-height: 1.4;
-    word-break: break-all;
+.task-header-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
 }
 
 .category-tag {
@@ -248,32 +309,164 @@ header {
     font-weight: bold;
 }
 
+.group-badge {
+    font-size: 0.7rem;
+    color: var(--text-sub);
+    border: 1px dashed var(--border-color);
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: transparent;
+}
+
+.user-badge {
+    font-size: 0.7rem;
+    color: var(--text-sub);
+    border: 1px solid var(--border-color);
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: var(--card-default);
+    margin-left: auto;
+}
+
+.task-title {
+    font-weight: 700;
+    font-size: 1rem;
+    margin: 8px 0;
+    line-height: 1.4;
+}
+
 .task-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.8rem;
-    opacity: 0.8;
+    font-size: 0.75rem;
+    opacity: 0.9;
     margin-top: 12px;
 }
 
-.btn-icon {
-    background: none;
-    border: none;
-    color: inherit;
-    cursor: pointer;
-    opacity: 0.4;
-    padding: 0;
-    font-family: inherit;
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-/* --- モーダル --- */
+.footer-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.delete-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: 0.2s;
+}
+
+/* ガントチャート */
+.gantt-view-container {
+    background: var(--card-default);
+    border-radius: var(--radius-m);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.gantt-header-row {
+    display: flex;
+    background: var(--column-bg);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.gantt-scroll {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+}
+
+.gantt-row {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-bottom: 1px solid var(--border-color);
+    width: max-content;
+    min-width: 100%;
+}
+
+.gantt-label {
+    width: 200px;
+    min-width: 200px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    position: sticky;
+    left: 0;
+    background: var(--card-default);
+    z-index: 5;
+    padding: 0 15px;
+    border-right: 1px solid var(--border-color);
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.gantt-timeline {
+    position: relative;
+    height: 100%;
+    background-image: linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+}
+
+.gantt-day-cell {
+    width: 50px;
+    min-width: 50px;
+    text-align: center;
+    font-size: 0.7rem;
+    border-right: 1px solid var(--border-color);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gantt-day-cell.weekend {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.gantt-bar {
+    position: absolute;
+    height: 26px;
+    background: var(--accent-color);
+    border-radius: 13px;
+    top: 7px;
+    font-size: 0.75rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    cursor: pointer;
+    z-index: 3;
+    white-space: nowrap;
+}
+
+.today-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #ff8787;
+    z-index: 4;
+    pointer-events: none;
+}
+
+/* モーダル */
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background: rgba(0, 0, 0, 0.5);
     display: none;
     justify-content: center;
@@ -284,48 +477,32 @@ header {
 
 .modal-content {
     background: var(--card-default);
-    padding: 35px;
+    padding: 30px;
     border-radius: var(--radius-l);
-    width: 500px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--border-color);
-}
-
-.modal-content h3 {
-    margin: 0 0 25px 0;
-    border-bottom: 3px solid var(--accent-color);
-    display: inline-block;
-    padding-bottom: 5px;
-    font-size: 1.2rem;
+    width: 480px;
 }
 
 .modal-item {
-    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
+    margin-bottom: 15px;
 }
 
 .modal-item label {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: bold;
     opacity: 0.7;
-    padding-left: 4px;
 }
 
 .modal-item input,
 .modal-item select,
 .modal-item textarea {
-    background: var(--bg-color);
-    color: var(--text-main);
+    padding: 12px;
     border: 1px solid var(--border-color);
-    padding: 12px 16px;
-    border-radius: 12px;
+    border-radius: 8px;
     font-family: inherit;
-    outline: none;
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
 .modal-row {
@@ -333,34 +510,17 @@ header {
     gap: 15px;
 }
 
-.modal-row .modal-item {
-    flex: 1;
-}
-
 .modal-footer {
     display: flex;
     justify-content: flex-end;
-    gap: 15px;
-    margin-top: 30px;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-.btn-secondary {
-    background: none;
-    border: 1px solid var(--border-color);
-    color: var(--text-sub);
-    padding: 10px 25px;
+.modal-footer button {
+    padding: 12px 25px;
     border-radius: 20px;
     cursor: pointer;
-    font-weight: bold;
-}
-
-.btn-primary {
-    background: var(--accent-color);
-    color: #fff;
     border: none;
-    padding: 10px 30px;
-    border-radius: 20px;
-    cursor: pointer;
     font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }

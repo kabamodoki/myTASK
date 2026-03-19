@@ -3,68 +3,143 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Smart Task Manager</title>
+    <title>個人用タスク管理</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 </head>
 
 <body>
-    <div class="app-container">
+    <nav class="side-nav">
+        <div class="nav-item active" onclick="switchView('board')">
+            <img src="assets/icon-board.png" alt="Board">
+            <span>ボード</span>
+        </div>
+        <div class="nav-item" onclick="switchView('gantt')">
+            <img src="assets/icon-chart.png" alt="Chart">
+            <span>チャート</span>
+        </div>
+    </nav>
+
+    <div class="main-content">
         <header>
-            <h2>タスクボード</h2>
-            <select id="themeSelect" onchange="changeTheme()">
-                <option value="">カジュアル</option>
-                <option value="theme-dark">ダーク</option>
-                <option value="theme-neon">ネオンブルー</option>
-            </select>
+            <h2>個人用タスク管理</h2>
         </header>
-        <div class="add-form">
-            <div class="form-group" style="flex-grow:1;"><label>内容</label><input type="text" id="taskTitle"
-                    placeholder="新しいタスク..."></div>
-            <div class="form-group"><label>種別</label><select id="taskCategory"></select></div>
-            <div class="form-group"><label>開始</label><input type="date" id="taskStartDate"></div>
-            <div class="form-group"><label>終了</label><input type="date" id="taskEndDate"></div>
-            <button onclick="addTask()">追加</button>
-        </div>
-        <div class="kanban-board">
-            <div class="kanban-column column-todo">
-                <h3>これから</h3>
-                <div id="list-todo" class="task-list-area" data-status="未完了"></div>
+
+        <main id="boardView" class="view-section active">
+            <div class="add-form-container">
+                <div class="add-form">
+                    <div class="form-group">
+                        <label>タスク名</label>
+                        <input type="text" id="taskTitle" placeholder="何をする？">
+                    </div>
+                    <div class="form-group">
+                        <label>グループ</label>
+                        <input type="text" id="taskGroup" placeholder="任意">
+                    </div>
+                    <div class="form-group">
+                        <label>作業者</label>
+                        <input type="text" id="taskUser" placeholder="名前">
+                    </div>
+                    <div class="form-group">
+                        <label>カテゴリ</label>
+                        <select id="taskCategory"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>開始</label>
+                        <input type="date" id="taskStartDate">
+                    </div>
+                    <div class="form-group">
+                        <label>終了</label>
+                        <input type="date" id="taskEndDate">
+                    </div>
+                    <button onclick="addTask()">追加</button>
+                </div>
+
+                <div class="theme-box">
+                    <label>テーマ変更</label>
+                    <select id="themeSelect"
+                        onchange="document.body.className=this.value; localStorage.setItem('selectedTheme', this.value);">
+                        <option value="">カジュアル</option>
+                        <option value="theme-dark">ダーク</option>
+                        <option value="theme-neon">ネオンブルー</option>
+                    </select>
+                </div>
             </div>
-            <div class="kanban-column column-doing">
-                <h3>やってる</h3>
-                <div id="list-doing" class="task-list-area" data-status="進行中"></div>
+
+            <div class="kanban-board">
+                <div class="kanban-column column-todo">
+                    <h3>これから</h3>
+                    <div id="list-todo" class="task-list-area" data-status="未完了"></div>
+                </div>
+                <div class="kanban-column column-doing">
+                    <h3>進行中</h3>
+                    <div id="list-doing" class="task-list-area" data-status="進行中"></div>
+                </div>
+                <div class="kanban-column column-done">
+                    <h3>完了</h3>
+                    <div id="list-done" class="task-list-area" data-status="完了"></div>
+                </div>
+                <div class="kanban-column column-urgent">
+                    <h3>期限近</h3>
+                    <div id="urgentList" class="task-list-area"></div>
+                </div>
             </div>
-            <div class="kanban-column column-done">
-                <h3>できた！</h3>
-                <div id="list-done" class="task-list-area" data-status="完了"></div>
+        </main>
+
+        <main id="ganttView" class="view-section">
+            <div class="gantt-view-container">
+                <div class="gantt-scroll">
+                    <div id="ganttHeader" class="gantt-header-row"></div>
+                    <div id="ganttChart"></div>
+                </div>
             </div>
-            <div class="kanban-column column-urgent">
-                <h3>⚠️ 期限近</h3>
-                <div id="urgentList" class="task-list-area"></div>
-            </div>
-        </div>
+        </main>
     </div>
+
     <div id="editModal" class="modal-overlay">
         <div class="modal-content">
-            <h3>タスク編集</h3>
+            <h3 style="margin-top:0; border-bottom:1px solid #eee; padding-bottom:10px;">詳細編集</h3>
             <input type="hidden" id="editTaskId">
-            <div class="modal-item"><label>タイトル</label><input type="text" id="editTitle"></div>
-            <div class="modal-item"><label>カテゴリー</label><select id="editCategory"></select></div>
-            <div class="modal-row">
-                <div class="modal-item"><label>開始日</label><input type="date" id="editStartDate"></div>
-                <div class="modal-item"><label>終了日</label><input type="date" id="editEndDate"></div>
+            <div class="modal-item">
+                <label>タイトル</label>
+                <input type="text" id="editTitle">
             </div>
-            <div class="modal-item"><label>メモ</label><textarea id="editMemo" style="height:120px; resize:none;"
-                    placeholder="詳細メモ..."></textarea></div>
+            <div class="modal-row">
+                <div class="modal-item" style="flex:1">
+                    <label>グループ</label>
+                    <input type="text" id="editGroup">
+                </div>
+                <div class="modal-item" style="flex:1">
+                    <label>作業者</label>
+                    <input type="text" id="editUser">
+                </div>
+            </div>
+            <div class="modal-item">
+                <label>カテゴリー</label>
+                <select id="editCategory"></select>
+            </div>
+            <div class="modal-row">
+                <div class="modal-item" style="flex:1">
+                    <label>開始日</label>
+                    <input type="date" id="editStartDate">
+                </div>
+                <div class="modal-item" style="flex:1">
+                    <label>終了日</label>
+                    <input type="date" id="editEndDate">
+                </div>
+            </div>
+            <div class="modal-item">
+                <label>メモ</label>
+                <textarea id="editMemo" rows="4"></textarea>
+            </div>
             <div class="modal-footer">
-                <button class="btn-secondary"
-                    onclick="document.getElementById('editModal').style.display='none'">閉じる</button>
-                <button class="btn-primary" onclick="saveEdit()">保存</button>
+                <button onclick="document.getElementById('editModal').style.display='none'"
+                    style="background:#fff; border:1px solid #ccc;">閉じる</button>
+                <button onclick="saveEdit()" style="background:var(--accent-color); color:white;">変更を保存</button>
             </div>
         </div>
     </div>
-    <script src="config.js"></script>
+
     <script src="script.js"></script>
 </body>
 
